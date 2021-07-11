@@ -372,14 +372,10 @@ document.getElementById('record').addEventListener('click', (e) => {
 //When user choose to record screen
 document.getElementById('record-screen').addEventListener('click', () => {
     help.toggleModal('recording-options-modal', false);
-    if (record && record.getVideoTracks().length) {
-        startRecording(record);
-    } else {
         help.shareScreen().then((screenStream) => {
             record = screenStream;
             startRecording(screenStream);
         }).catch(() => {});
-    }
 });
 
 //When user choose to record own video
