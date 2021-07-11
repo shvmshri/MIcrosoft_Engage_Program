@@ -8,15 +8,13 @@ const server = require('http').Server(app)
 const io = require('socket.io')(server);
 
 // FOR LOCAL PEER SERVER
-const { PeerServer } = require('peer');
-const peerServer = PeerServer({ port: 3001, path: '/' });
+// const { PeerServer } = require('peer');
+// const peerServer = PeerServer({ port: 3001, path: '/' });
 
 
 app.set('view engine', 'ejs')
 app.use(express.static('public'));
-// app.use('/peerjs',peerServer);                 
-
-
+                 
 app.get('/', function (req, res) {
     res.redirect(`/${uuidv4()}`);
 });

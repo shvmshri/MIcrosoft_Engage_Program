@@ -54,13 +54,13 @@ video {
 
 /* CONTROLS */
 .Controls_block {
-    transform: translateY(80%) translateX(50%);
+    transform: translateY(10%) translateX(50%);
     opacity: 0.75;
     background-color: #303030;
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
     position: absolute;
     z-index: 10;
-    top: 80%;
+    bottom: 10%;
     right: 50%;
 }
 

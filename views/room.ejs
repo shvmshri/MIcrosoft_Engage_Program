@@ -10,7 +10,6 @@
 
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css"
         integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
-    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"> -->
     <link rel="stylesheet" href="https://bootswatch.com/4/journal/bootstrap.min.css" />
     <link rel="stylesheet" href="styles.css">
 
@@ -41,10 +40,6 @@
         $(window).on("load", function () {
             $("#myModal").modal("show");
         });
-        // $("form").submit(function (e) {
-        //     e.preventDefault();
-        //     $('#myModal').modal('hide')
-        // });
     </script>
 
 
@@ -59,51 +54,29 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="staticBackdropLabel">Enter your details:</h5>
-                    <!-- <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button> -->
                 </div>
-                <!-- <form action="/" method="POST"> -->
                     <div class="modal-body">
-                        <!-- <div class="form-row"> -->
                             <input type="text" id="userName" placeholder="Name*" autocomplete="off">
-                        <!-- </div> -->
-                      
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" id="submitName">
                             Go!
                         </button>
-                   
                     </div>
-
-                <!-- </form> -->
-
-
             </div>
         </div>
     </div>
 
     <audio src="chat_request.mp3" id="chatAudio"></audio>
-    <!-- <div class="overlay" id="hideInvitePopup">
-     
-        <div class="invitePop">
-            <input type="text" value="..." id="roomLink" readonly>
-            <button class="fas fa-clipboard" id="copyToClipboard"></button>
-          
-        </div>
-    </div> -->
-
     <div class="main">
         <div class="left">
             <div class="mainVideos">
                 <div id="video-grid"></div>
             </div>
             <div class="Controls">
-
                 <div class="Controls_block btn-group" role="group">
                     <div class="Controls_button rounded-0 btn" id="muteButton" type="button" title="Mute">
-                        <!-- onclick="muteUnmute()" -->
                         <i class="fa fa-microphone"></i>
-                        <!-- <span>Mute</span> -->
                     </div>
                     <div class="Controls_button btn" id="playPauseVideo" type="button" title="Pause Video">
                         <i class="fa fa-video"></i>
@@ -119,15 +92,12 @@
                     </div>
                     <div class="Controls_button btn" id="record" type="button" title="Record">
                         <i class="fa fa-dot-circle text-white"></i>
-                        <!-- <span>Record</span> -->
                     </div>
                     <div class="Controls_button btn" id="share-screen" type="button" title="Share Screen">
-                        <i class="far fa-caret-square-up"></i>
-                        <!-- <span>Share Screen</span> -->
+                        <i class="far fa-caret-square-up"></i>                       
                     </div>
                     <div class="Controls_button btn" id="Participants" type="button" title="Participants">
-                        <i class="fa fa-users"></i>
-                        <!-- <span>Participants</span> -->
+                        <i class="fa fa-users"></i>                      
                     </div>
                     <a href="/close">
                         <div class="Controls_button leaveMeeting rounded-0 btn" id="leave-meeting" type="button"
@@ -139,8 +109,6 @@
                 </div>
             </div>
         </div>
-
-
         <div class="right">
 
             <div class="header_chat">
@@ -189,9 +157,7 @@
                 </tbody>
               </table>
         </div>
-       
         <button class="btn btn-lg rounded-0 btn-secondary" id='close_participants'>Close</button>
-
     </div>
 
 </body>
