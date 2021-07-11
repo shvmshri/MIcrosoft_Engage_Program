@@ -9,10 +9,11 @@
 html,
 body {
     height: 100%;
-    font-family: "Segoe UI",system-ui,"Apple Color Emoji","Segoe UI Emoji",sans-serif;
+    font-family: "Segoe UI", system-ui, "Apple Color Emoji", "Segoe UI Emoji", sans-serif;
     background-color: #1f1f1f !important;
 }
 
+/* VIDEOS */
 #video-grid {
     display: flex;
     justify-content: center;
@@ -29,12 +30,10 @@ video {
     display: block;
     flex: 1;
     object-fit: cover;
-    /* border: 5px solid #000; */
-    max-width: 600px ; 
-    max-height: 400px ;
+    max-width: 37rem;
+    max-height: 25rem;
     background-color: black;
     box-shadow: rgba(0, 0, 0, 0.35) 15px 15px 25px;
-    /* border-radius: 15px; */
     border: 2px solid #3d3d42;
 
 
@@ -53,66 +52,30 @@ video {
     justify-content: center;
 }
 
-/* .Controls {
-    display: flex; 
-   position: relative;
-    background-color: #292929;
-    color: #d2d2d2; 
-     padding: 5px; 
-    justify-content: space-between;
-} */
-
+/* CONTROLS */
 .Controls_block {
+    transform: translateY(80%) translateX(50%);
     opacity: 0.75;
-    /* display: flex; */
     background-color: #303030;
-    /* box-shadow: rgba(17, 17, 26, 0.1) 0px 8px 24px, rgba(17, 17, 26, 0.1) 0px 16px 56px, rgba(17, 17, 26, 0.1) 0px 24px 80px; */
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-    /* border-color: ; */
     position: absolute;
-    /* height: 20px; */
-    /* width: initial; */
-    /* margin: 0 auto; */
     z-index: 10;
-    /* bottom: 20%;
-    left: 50%;                   /**Important*/
-    /* transform: translateX(-100%); /**Important: offsets based on the element's width and not its parent*/
-    /* width:max-content;            *Important: prevents element from shrinking */
-    bottom: 70px;
-    right: 550px;
-    /* cursor: move; */
+    top: 80%;
+    right: 50%;
 }
 
 .Controls_button {
     color: #fff !important;
     padding: 12px 18px;
-    /* display: flex;
-    flex-direction: column;
-    cursor: pointer;
-    padding: 10px;
-    justify-content: center;
-    align-items: center;
-    min-width: 80px;
-    transition: all 0.3s ease-in-out;
-    border-radius: 10px;
-    margin: 5px; */
-} 
-
-/* .Controls_button span {
-    margin-top: 10px;
-    display: block;
-} */
+}
 
 .Controls_button:hover {
     background-color: #202020;
 }
+
 .leaveMeeting:hover {
     background-color: #A00000;
 }
-
-/* .Controls_button i {
-    font-size: 25px;
-} */
 
 .leaveMeeting {
     background-color: #900000;
@@ -122,7 +85,6 @@ video {
 .left {
     flex: 1;
     display: flex;
-    /* position: relative; */
     flex-direction: column;
 }
 
@@ -131,6 +93,7 @@ video {
 
 }
 
+/* CHAT WINDOW */
 .showchat .active {
     background-color: #1f1f1f;
 }
@@ -144,7 +107,7 @@ video {
 
 .showchat .msg_window {
     font-size: 0.85rem;
-    
+
     flex-grow: 1;
     overflow: auto;
     padding: 20px 0 20px 0;
@@ -157,7 +120,7 @@ video {
 }
 
 .showchat .msg_container input {
-   
+
     flex-grow: 1;
     background-color: transparent;
     border: none;
@@ -167,12 +130,8 @@ video {
 }
 
 .showchat #all_msgs li.otherUser {
-  
-    /* position: relative; */
     width: 75%;
     margin: 2%;
-    /* margin-left: 10px;
-    margin-right: 10px; */
     background-color: #292929;
     color: #fff;
     list-style: none;
@@ -181,13 +140,9 @@ video {
 }
 
 .showchat #all_msgs li.Me {
-   
-    /* position: relative; */
     width: 75%;
     margin: 10px 10px 10px 0px;
     margin-left: 23%;
-    /* margin-left: 10px;
-    margin-right: 10px; */
     background-color: #323348;
     color: #fff;
     list-style: none;
@@ -198,84 +153,68 @@ video {
 
 .showchat .right {
     flex: 0.35;
-    /* display: flex; */
     flex-direction: column;
     background-color: #242324;
     border-left: 1px solid #3d3d42;
     display: flex;
-    /* position: fixed; */
     width: 30%;
-    /* height: calc(100% - 65px); */
     height: 100%;
-    /* opacity: 0.8; */
 }
 
 .showchat .left {
     flex: 1;
 }
 
-.overlay {
-    display: none;
-}
 
-.showInvite .overlay {
-
-    position: fixed;
-    display: block;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(0, 0, 0, 0.5);
-    z-index: 2;
-    cursor: pointer;
-}
-
-.showInvite .invitePop {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    /* font-size: 15px; */
-    background-color: #1f1f1f;
-   
-    transform: translate(-50%, -50%);
-    -ms-transform: translate(-50%, -50%);
-    /* border: 2px solid black; */
-    /* border-radius: 5px; */
-    /* padding: 14px; */
-}
-
-.showInvite .invitePop input {
-    background-color: #282828;
-    color: #696969;
-    /* border: 3px solid black; */
-    /* margin-right: 3px; */
-}
-
-.showInvite .invitePop button{
-    border: none;
-    
-}
-
-/* record */
-
-.record-option{
-    /* height: 200px; */
-    /* border-radius: 10%; */
-    /* border: 1px solid #17a2b8; */
+/* RECORD */
+.record-option {
     cursor: pointer;
     padding: 10px;
-    /* margin: 5px; */
     vertical-align: middle;
 }
 
-.record-option:hover{
+.record-option:hover {
     color: #282828;
 }
 
-.participants{
+.custom-modal {
+
+    display: none;
+    position: absolute;
+    z-index: 10000;
+    left: 0;
+    top: 0;
+    overflow: auto;
+    color: #696969;
+}
+
+
+.custom-modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #17a2b8;
+}
+
+.custom-modal #record-video {
+    cursor: pointer;
+}
+
+.custom-modal #record-screen {
+    cursor: pointer;
+}
+
+.colored {
+    color: #323348;
+}
+
+#closeModal {
+    margin-top: 10px;
+}
+
+
+/* INVITE PARTICIPANTS AND SHARE LINK */
+.participants {
     min-width: 20rem;
     text-align: center;
     opacity: 0.9;
@@ -288,118 +227,26 @@ video {
     overflow: auto;
     background-color: #303030;
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-}
-
-.participants table{
     color: #fff;
-    /* border: none; */
 }
 
-td{
+.participants table {
+    color: #fff;
+}
+
+.table th {
     border: none;
 }
 
-
-
-.custom-modal {
-   
-    display: none;
-    position: absolute;
-    z-index: 10000;
-    left: 0;
-    top: 0;
-    /* width: 100%;
-    height: 100%; */
-    overflow: auto;
-    color:#696969 ;
+h4{
+    margin: 1.5rem 2rem 1rem;
+}
+.invitePop{
+    margin-bottom: 2rem;
 }
 
-
-.custom-modal-content {
-    background-color: #fefefe;
-    margin: 15% auto;
-    padding: 20px;
-    border: 1px solid #17a2b8;
-    /* width: 80%; */
+.invitePop i{
+font-size: 1.5rem;
+margin-left: 0.5rem;
+cursor: pointer;
 }
-
-.custom-modal #record-video{
-    cursor: pointer;
-}
-
-.custom-modal #record-screen{
-    cursor: pointer;
-}
-
-.colored{
-    color: #323348;
-}
-
-#closeModal{
-   margin-top: 10px;
-}
-
-/* @keyframes animatetop {
-    from {top: -300px; opacity: 0}
-    to {top: 0; opacity: 1}
-} */
-
-
-/* @media only screen and (max-width:767px){
-    .chat-col{
-        right: -100vw;
-        width: 100vw;
-        z-index: 99999;
-        transition: 0.3s;
-        top: 47px;
-    } */
-  
-    /* .chat-opened::-webkit-scrollbar {
-        display: none;
-    }
-
-    #chat-messages{
-        height: 60vh;
-    }
-
-    .chat-box{
-        bottom: 90px;
-        margin-bottom: 0px;
-    }
-    
-    .card-sm{
-        max-width: 100%;
-        min-width: 50%;
-    }
-
-
-    .local-video{
-        width:40vw;
-    }
-}
-
-
-@media (min-width:768px){
-    .card{
-        width: 50%;
-        z-index: 1000;
-    }
-} */
-
-/*  */
-
-
-
-/* video {
-    max-width: 100%;
-    width: 50% !important;
-    max-height: 190px;
-
-}
-#video-grid {
-    justify-content: flex-start;
-    align-items: initial; */
-/* } */
-/* <button class="btn btn-sm text-white pull-right btn-no-effect" id='toggle-chat-pane'>
-                    <i class="fa fa-comment"></i> <span class="badge badge-danger very-small font-weight-lighter" id='new-chat-notification' hidden>New</span>
-                </button> */

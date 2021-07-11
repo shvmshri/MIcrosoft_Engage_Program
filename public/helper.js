@@ -30,7 +30,7 @@ export default{
         //     elements[0].style.maxHeight = "400px";
         //     elements[0].style.maxWidth = "600px";
         // }
-        if(totalUsers <=1 ) {elements[0].style.maxWidth = "600px"}
+        if(totalUsers <=1 ) {elements[0].style.maxWidth = "37rem"}
          if (totalUsers > 1) {
             if (elements[0].style.removeProperty) {
                 elements[0].style.removeProperty('max-width');
@@ -42,19 +42,19 @@ export default{
 
             for (let i = 0; i < totalUsers; i++) {
                
-                elements[i].classList.add("col-4");
+                elements[i].classList.add("col-3");
     
     
                 if(totalUsers >=4){
-                    elements[i].style.maxHeight = "300px"
+                    elements[i].style.maxHeight = "17rem"
                 } 
     
                 else if(totalUsers >=3){
-                    elements[i].style.maxHeight = "350px"
+                    elements[i].style.maxHeight = "21rem"
                 }
     
                 else if(totalUsers >= 2){
-                    elements[i].style.maxHeight = "400px";
+                    elements[i].style.maxHeight = "25rem";
                 }
                 // elements[i].style.width = 100 / totalUsers + "%";
                 //adjusting width of videos acc to no of users

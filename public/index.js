@@ -13,9 +13,15 @@ myVideo.muted = true;
 
 
 // PEER CONNECTIONS
+// const peer = new Peer(undefined, {
+//     host: 'videochat2001.herokuapp.com',
+//     port: '443',
+//     path: '/',
+// })
+
 const peer = new Peer(undefined, {
-    host: 'videochat2001.herokuapp.com',
-    port: '443',
+    host: 'localhost',
+    port: '3001',
     path: '/',
 })
 
@@ -264,11 +270,6 @@ const startRecording = ( stream )=> {
     };
 }
 
-
-
-
-
-
 // TOGGLE BUTTONS
 // video
 document.getElementById('playPauseVideo').addEventListener('click', (e) => {
@@ -313,6 +314,8 @@ document.getElementById('save_chat').addEventListener('click',(e)=>{
 // Participants
 document.getElementById('Participants').addEventListener('click',(e)=>{
 
+    document.getElementById("roomLink").value = window.location.href;
+
 var keys = Object.keys(namesAndIds);
 var myList = '<tr>';
 
@@ -354,13 +357,8 @@ document.getElementById('close_participants').addEventListener('click',(e)=>{
 
 // Invite people
 document.getElementById('show_invite').addEventListener('click',(e)=>{
-    document.body.classList.add('showInvite');
-    document.getElementById("roomLink").value = window.location.href;
-});
-
-document.getElementById('hideInvitePopup').addEventListener('click',(e)=>{
-    document.body.classList.remove('showInvite');
-});
+    document.getElementById('Participants').click();
+})
 
 document.getElementById('copyToClipboard').addEventListener('click',(e)=>{
     var copytext = document.getElementById("roomLink");
@@ -368,9 +366,15 @@ document.getElementById('copyToClipboard').addEventListener('click',(e)=>{
     copytext.select();
     copytext.setSelectionRange(0, 99999);
     document.execCommand("copy");
-    alert("Copied: " + copytext.value);
-    document.body.classList.remove('showInvite');
     
+    document.getElementById('copyToClipboard').classList.add("fa-clipboard-check");
+    document.getElementById('copyToClipboard').classList.remove("fa-clipboard");
+
+    setTimeout(() => {
+        document.getElementById('copyToClipboard').classList.add("fa-clipboard");
+        document.getElementById('copyToClipboard').classList.remove("fa-clipboard-check");
+    }, 500);
+   
 });
 
 // Share Screen

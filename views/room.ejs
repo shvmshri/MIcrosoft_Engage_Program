@@ -83,14 +83,14 @@
     </div>
 
     <audio src="chat_request.mp3" id="chatAudio"></audio>
-    <div class="overlay" id="hideInvitePopup">
-        <!-- onclick="hideInvitePopup()" -->
+    <!-- <div class="overlay" id="hideInvitePopup">
+     
         <div class="invitePop">
             <input type="text" value="..." id="roomLink" readonly>
             <button class="fas fa-clipboard" id="copyToClipboard"></button>
-            <!-- onclick="copyToClipboard()" -->
+          
         </div>
-    </div>
+    </div> -->
 
     <div class="main">
         <div class="left">
@@ -172,27 +172,25 @@
 
     <div class="participants" id="participants_div">
         <div id="share_invite">
-
+            <h4>Share Invite</h4>
+            <div class="invitePop">
+                <input type="text" value="..." id="roomLink" readonly>
+                <i class="fas fa-clipboard" id="copyToClipboard"></i>
+            </div>
         </div>
         <div id="users_table">
             <table class="table">
                 <thead>
                   <tr>
-                    <!-- <th scope="col">#</th> -->
-                    <!-- <th scope="col">Id</th> -->
                     <th scope="col">Participants</th>
                   </tr>
                 </thead>
                 <tbody id="users_body">
-                  <!-- <tr>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                  </tr> -->
                 </tbody>
               </table>
         </div>
-
-        <button class="btn btn-secondary" id='close_participants'>Close</button>
+       
+        <button class="btn btn-lg rounded-0 btn-secondary" id='close_participants'>Close</button>
 
     </div>
 
