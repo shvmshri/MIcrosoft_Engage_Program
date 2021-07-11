@@ -14,7 +14,7 @@ myVideo.muted = true;
 
 // PEER CONNECTIONS
 const peer = new Peer(undefined, {
-    host: 'localhost',
+    host: 'https://arcane-wave-79048.herokuapp.com/',
     port: '3001',
     path: '/',
 })
