@@ -318,7 +318,7 @@ var myList = '<tr>';
 
 keys.forEach((key, index) => {
     console.log(`${key}: ${namesAndIds[key]}`);
-    myList += '<th scope="col">'+key+'</th>';
+    // myList += '<th scope="col">'+key+'</th>';
     myList += '<th scope="col">'+namesAndIds[key]+'</th>';
     myList += '</tr>';
 });
@@ -326,23 +326,7 @@ keys.forEach((key, index) => {
 document.getElementById('users_body').innerHTML = myList;
 help.toggleModal('participants_div',true);
 console.log(myList);
-// for (var i = 0; i < data[i]; i++) { 
-//   myList += '<li>' + i + '=' + data[i] + '</li>'; 
-// } 
-// myList += '</ul>';
-// test.innerHTML = myList;
-
-
 });
-
-// var aTags = document.getElementsByTagName("video");
-// console.
-//     for (var i=0;i<aTags.length;i++){
-//         aTags[i].addEventListener('mouseover',function(event){
-//             console.log(event.target);
-//         })
-//     }
-
 
 document.getElementById('video-grid').addEventListener('mouseover',function(event){
 if(event.target.tagName == "VIDEO")

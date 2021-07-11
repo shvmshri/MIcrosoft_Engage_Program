@@ -276,18 +276,28 @@ video {
 }
 
 .participants{
+    min-width: 20rem;
+    text-align: center;
+    opacity: 0.9;
     display: none;
     position: fixed;
     z-index: 20000;
-    top: 0;
-    left: 0;
+    top: 50%;
+    left: 50%;
+    transform: translateY(-50%) translateX(-50%);
     overflow: auto;
-    background-color: blanchedalmond;
-
+    background-color: #303030;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
 
+.participants table{
+    color: #fff;
+    /* border: none; */
+}
 
-
+td{
+    border: none;
+}
 
 
 

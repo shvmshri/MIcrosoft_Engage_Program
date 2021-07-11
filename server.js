@@ -7,18 +7,14 @@ const {
 const server = require('http').Server(app) 
 const io = require('socket.io')(server);
 
-// const {ExpressPeerServer} = require('peer');          //doubt
-// const peerServer = ExpressPeerServer(server,{
-//     debug:true,
-// })
-
+// FOR LOCAL PEER SERVER
 // const { PeerServer } = require('peer');
 // const peerServer = PeerServer({ port: 3001, path: '/' });
 
 
 app.set('view engine', 'ejs')
 app.use(express.static('public'));
-// app.use('/peerjs',peerServer);                        //doubt
+// app.use('/peerjs',peerServer);                 
 
 
 app.get('/', function (req, res) {
@@ -35,7 +31,8 @@ app.get('/:room', function (req, res) {
     })
 })
 
-io.on("connection", (socket) => { //triggers if any new connection occurs.
+// Triggers if any new connection occurs.
+io.on("connection", (socket) => { 
     socket.on('join-room', function (roomd, userid) {
         socket.join(roomd);
         socket.broadcast.to(roomd).emit('user-connected', userid);
