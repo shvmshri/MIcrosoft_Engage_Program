@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Teams Clone</title>
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css"
+        integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"> -->
+    <link rel="stylesheet" href="https://bootswatch.com/4/journal/bootstrap.min.css" />
+    <link rel="stylesheet" href="styles.css">
+
+
+    <script>
+        const room_id = '<%= roomId %>';
+    </script>
+
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous">
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous">
+    </script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
+    </script>
+    <script defer src="https://unpkg.com/peerjs@1.2.0/dist/peerjs.min.js"></script>
+    <script src="/socket.io/socket.io.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/webrtc-adapter/7.3.0/adapter.min.js"
+        integrity="sha256-2qQheewaqnZlXJ3RJRghVUwD/3fD9HNqxh4C+zvgmF4=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/1.3.8/FileSaver.min.js'></script>
+    <script src='https://cdn.rawgit.com/yahoo/xss-filters/master/dist/xss-filters.js'></script>
+    <script type="module" src="index.js" defer></script>
+    <script>
+        $(window).on("load", function () {
+            $("#myModal").modal("show");
+        });
+        // $("form").submit(function (e) {
+        //     e.preventDefault();
+        //     $('#myModal').modal('hide')
+        // });
+    </script>
+
+
+</head>
+
+<body>
+
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" data-backdrop="static" data-keyboard="false" tabindex="-1"
+        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">Enter your details:</h5>
+                    <!-- <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button> -->
+                </div>
+                <!-- <form action="/" method="POST"> -->
+                    <div class="modal-body">
+                        <!-- <div class="form-row"> -->
+                            <input type="text" id="userName" placeholder="Name*" autocomplete="off">
+                        <!-- </div> -->
+                      
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" id="submitName">
+                            Go!
+                        </button>
+                   
+                    </div>
+
+                <!-- </form> -->
+
+
+            </div>
+        </div>
+    </div>
+
+    <audio src="chat_request.mp3" id="chatAudio"></audio>
+    <div class="overlay" id="hideInvitePopup">
+        <!-- onclick="hideInvitePopup()" -->
+        <div class="invitePop">
+            <input type="text" value="..." id="roomLink" readonly>
+            <button class="fas fa-clipboard" id="copyToClipboard"></button>
+            <!-- onclick="copyToClipboard()" -->
+        </div>
+    </div>
+
+    <div class="main">
+        <div class="left">
+            <div class="mainVideos">
+                <div id="video-grid"></div>
+            </div>
+            <div class="Controls">
+
+                <div class="Controls_block btn-group" role="group">
+                    <div class="Controls_button rounded-0 btn" id="muteButton" type="button" title="Mute">
+                        <!-- onclick="muteUnmute()" -->
+                        <i class="fa fa-microphone"></i>
+                        <!-- <span>Mute</span> -->
+                    </div>
+                    <div class="Controls_button btn" id="playPauseVideo" type="button" title="Pause Video">
+                        <i class="fa fa-video"></i>
+
+                    </div>
+                    <div class="Controls_button btn" id="chat_btn" type="button" title="Chat">
+                        <i class="fa fa-comment"></i>
+
+                    </div>
+                    <div class="Controls_button btn" id="show_invite" type="button" title="Invite People">
+                        <i class="fa fa-user-plus"></i>
+
+                    </div>
+                    <div class="Controls_button btn" id="record" type="button" title="Record">
+                        <i class="fa fa-dot-circle text-white"></i>
+                        <!-- <span>Record</span> -->
+                    </div>
+                    <div class="Controls_button btn" id="share-screen" type="button" title="Share Screen">
+                        <i class="far fa-caret-square-up"></i>
+                        <!-- <span>Share Screen</span> -->
+                    </div>
+                    <div class="Controls_button btn" id="Participants" type="button" title="Participants">
+                        <i class="fa fa-users"></i>
+                        <!-- <span>Participants</span> -->
+                    </div>
+                    <a href="/close">
+                        <div class="Controls_button leaveMeeting rounded-0 btn" id="leave-meeting" type="button"
+                            title="Leave">
+                            <i class="fas fa-times"></i>
+                        </div>
+                    </a>
+
+                </div>
+            </div>
+        </div>
+
+
+        <div class="right">
+
+            <div class="header_chat">
+                <h5>CHAT BOX</h5>
+            </div>
+            <div class="msg_window" id="msg_window">
+                <ul class="messages" id="all_msgs"></ul>
+            </div>
+            <div class="msg_container">
+                <input type="text" id="msg" placeholder="Chat here...">
+                <button class="sendMsg" id="sendMsg"><i class="fa fa-paper-plane"></i></button>
+                <button type="button" id="save_chat">Save Chat</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="custom-modal" id='recording-options-modal'>
+        <div class="custom-modal-content">
+            <div class="row text-center">
+
+                <ul>
+                    <li class="record-option" id="record-video">Record Video</li>
+                    <li class="record-option" id="record-screen">Record Screen</li>
+                    <button class="btn btn-secondary" id='closeModal'>Close</button>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="participants" id="participants_div">
+        <div id="share_invite">
+
+        </div>
+        <div id="users_table">
+            <table class="table">
+                <thead>
+                  <tr>
+                    <!-- <th scope="col">#</th> -->
+                    <th scope="col">Id</th>
+                    <th scope="col">Name</th>
+                  </tr>
+                </thead>
+                <tbody id="users_body">
+                  <tr>
+                    <!-- <th scope="row">1</th> -->
+                    <td>Mark</td>
+                    <td>Otto</td>
+                  </tr>
+                </tbody>
+              </table>
+        </div>
+
+        <button class="btn btn-secondary" id='close_participants'>Close</button>
+
+    </div>
+
+</body>
+
+</html>
