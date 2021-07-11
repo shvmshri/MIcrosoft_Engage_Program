@@ -21,7 +21,6 @@ const peer = new Peer(undefined, {
 
 // PEER CONNECTION TO PEER SERVER
 peer.on('open', id => {
-    console.log(id);
     currentuserId = id;
     socket.emit('join-room', room_id, id)
 });
@@ -44,52 +43,40 @@ var namesAndIds = {};
 help.getUserFullMedia().then((stream) => {
     myVideostream = stream;
     addvideoStream(myVideo, stream, 'Me');
-    console.log('got localmediastream');
 
     // PEER RECEIVING CALL
     peer.on('call', (call) => {
-        console.log('call recievd');
         call.answer(stream)
-        //we will answer a coming call by giving our stream.//yahna we can ring popup to answer or not using socket.io
-        console.log('call anserwred');
-        console.log(call.peer);
-
+        //we will answer a coming call by giving our stream
         peers[call.peer] = call;
         currentPeer.push(call.peerConnection);
         const video = document.createElement('video');
-
-
-        call.on('stream', (comingVideoStream) => { //jisne call kia tha uski stream add krdi in video grid
-            console.log('got remotestream too! yay');
-            console.log(comingVideoStream);
-            addvideoStream(video, comingVideoStream,call.peer); //pass name of the user too if want
+        call.on('stream', (comingVideoStream) => {
+            // Add video of the calling peer in the video grid
+            addvideoStream(video, comingVideoStream, call.peer);
         });
-        
         call.on('close', () => {
             video.remove();
             help.adjustGrid();
-            //window.refresh
         });
-
-
-
     });
 
     // NEW PEER CONNECTED
     socket.on('user-connected', (userid) => {
-        console.log("New user connected...")
         setTimeout(connectNewUser, 1000, userid, stream);
     });
 
 
     // USER DISCONNECTED
     socket.on('user-disconnected', (userid) => {
-        if (peers[userid]) {peers[userid].close();delete peers[userid];}
-        console.log(namesAndIds[userid]);
+        if (peers[userid]) {
+            peers[userid].close();
+            delete peers[userid];
+        }
         help.speakText(`${namesAndIds[userid]} left`);
-        if(namesAndIds[userid]) {delete namesAndIds[userid];}
-        
-        // Jisne call ki thi voh leave krta h toh pnga h abhi 
+        if (namesAndIds[userid]) {
+            delete namesAndIds[userid];
+        }
     });
 
 }).catch((e) => {
@@ -98,32 +85,36 @@ help.getUserFullMedia().then((stream) => {
 
 
 // Names of the peers
+// namesAndIds is a object storing ids and names of the peers
 
-socket.on('nameReceived',(names)=>{
-    if(!(names.id in namesAndIds) ){
-    namesAndIds[names.id] = names.name;}
-    console.log(namesAndIds);
-    socket.emit('nameSend',{
+// Name received when a new user joined
+socket.on('nameReceived', (names) => {
+    if (!(names.id in namesAndIds)) {
+        namesAndIds[names.id] = names.name;
+    }
+    socket.emit('nameSend', {
         name: myName,
         id: currentuserId,
     });
 })
 
-socket.on('nameSended',(names)=>{
-    if(!(names.id in namesAndIds) ){
-        namesAndIds[names.id] = names.name;}
+// Send name to the users joined new
+socket.on('nameSended', (names) => {
+    if (!(names.id in namesAndIds)) {
+        namesAndIds[names.id] = names.name;
+    }
 })
 
 
 // CHAT
 
+// Adding new message to the list
 socket.on('createMessage', (message) => {
-    console.log(message);
     let li = document.createElement('li');
     if (message.user != currentuserId) {
         li.classList.add('otherUser');
         //this is for keeping the css different.
-        li.innerHTML = `<div><b>${namesAndIds[message.user]}:</b><p>${message.msg}</p></div>` +"\n";
+        li.innerHTML = `<div><b>${namesAndIds[message.user]}:</b><p>${message.msg}</p></div>` + "\n";
     } else {
         li.classList.add('Me');
         li.innerHTML = `<div><b>Me: </b><p>${message.msg}</p></div>` + "\n";
@@ -135,15 +126,11 @@ socket.on('createMessage', (message) => {
         help.playChatSound();
         help.has_new(true);
         document.getElementById('chat_btn').classList.add('has_new');
-        // document.getElementById(
-        //     'chat_btn'
-        // ).children[1].innerHTML = `Chat (${pendingMsg})`;
     }
 });
 
-
+// Send msg via enter key
 document.addEventListener('keypress', (e) => {
-    //sending msgs vis enter key
     if (e.key === 'Enter' && chatInputs.value != '') {
         socket.emit('message', {
             msg: chatInputs.value,
@@ -153,8 +140,8 @@ document.addEventListener('keypress', (e) => {
     }
 });
 
+// Send msg via button icon
 document.getElementById('sendMsg').addEventListener('click', (e) => {
-    // via mouse click on button
     if (chatInputs.value != '') {
         socket.emit('message', {
             msg: chatInputs.value,
@@ -164,24 +151,20 @@ document.getElementById('sendMsg').addEventListener('click', (e) => {
     }
 });
 
+// When the chat input box is focussed by the user , this shows user have read the new msgs and hence removing the css for new_msgs
 chatInputs.addEventListener('focus', () => {
     help.has_new(false);
-    document.getElementById('chat_btn').classList.remove('has_new'); //isse chat pe jo dot aata, it is removed but only when the box jisme msg type krte h get focus.
+    document.getElementById('chat_btn').classList.remove('has_new');
     pendingMsg = 0;
-    // document.getElementById('chat_btn').children[1].innerHTML = `Chat`;
 });
 
 
 
-// Helpers
-
-//Save My stream
-
+// HELPERS
 
 // Add stream to grid
 const addvideoStream = (videoT1, stream, U_id = "") => {
-    //adding video elemnt and stream to the html and increasing total users.
-
+    //adding video element and stream to the html and increasing total users.
     videoT1.srcObject = stream;
     videoT1.id = U_id;
     videoT1.class = "Video";
@@ -197,78 +180,62 @@ const addvideoStream = (videoT1, stream, U_id = "") => {
 // Calling the new user connected and adding it to our grid and peers array.
 const connectNewUser = (userid, streams) => {
     var call = peer.call(userid, streams);
-    console.log('made call');
     var video = document.createElement("video");
     call.on("stream", (comingVideoStream) => {
-        // console.log(comingVideoStream);
-        console.log('call answered! by ');
-        console.log(userid);
         addvideoStream(video, comingVideoStream, userid);
-        console.log('got remotestream too! yay');
     });
     call.on('close', () => {
         video.remove();
         help.adjustGrid();
-        //window.refresh
     });
     peers[call.peer] = call;
     currentPeer.push(call.peerConnection);
-    console.log(call.peer);
-    console.log(peers);
-
-
-    //peers is actually the array of calls for a particular peer to all other.
+    //peers is actually the array consisting of call connections for a particular peer to all other.
 };
 
-// Share screen
 
-const stopSharingScreen=()=>{
-    help.toggleShareIcons( false );
+// Share screen
+const stopSharingScreen = () => {
+    help.toggleShareIcons(false);
     help.toggleScreenBtnDisabled(false);
     let videoTrack = myVideostream.getVideoTracks()[0];
-    currentPeer.forEach((value)=>{
-        let sender = value.getSenders().find(function(s){
-            return s.track.kind == videoTrack.kind; 
+    currentPeer.forEach((value) => {
+        let sender = value.getSenders().find(function (s) {
+            return s.track.kind == videoTrack.kind;
         })
         sender.replaceTrack(videoTrack);
     })
 
 }
 
-// recording
-
-const startRecording = ( stream )=> {
-    mediaRecorder = new MediaRecorder( stream, {
+// Recording
+const startRecording = (stream) => {
+    mediaRecorder = new MediaRecorder(stream, {
         mimeType: 'video/webm;codecs=vp9'
-    } );
-
-    mediaRecorder.start( 1000 );
-    help.toggleRecordingIcons( true );
-
-    mediaRecorder.ondataavailable = function ( e ) {
-        recordedStream.push( e.data );
+    });
+    mediaRecorder.start(1000);
+    help.toggleRecordingIcons(true);
+    mediaRecorder.ondataavailable = function (e) {
+        recordedStream.push(e.data);
     };
-
     mediaRecorder.onstop = function () {
-        help.toggleRecordingIcons( false );
-
-        help.saveRecordedStream( recordedStream, currentuserId );
-
-        setTimeout( () => {
+        help.toggleRecordingIcons(false);
+        help.saveRecordedStream(recordedStream, currentuserId);
+        setTimeout(() => {
             recordedStream = [];
-        }, 3000 );
+        }, 3000);
     };
-
-    mediaRecorder.onerror = function ( e ) {
-        console.error( e );
+    mediaRecorder.onerror = function (e) {
+        console.error(e);
     };
 }
 
+
 // TOGGLE BUTTONS
-// video
+
+// Toggle between play video and pause video
 document.getElementById('playPauseVideo').addEventListener('click', (e) => {
     e.preventDefault();
-
     let enabled = myVideostream.getVideoTracks()[0].enabled;
     if (enabled) {
         myVideostream.getVideoTracks()[0].enabled = false;
@@ -279,8 +246,21 @@ document.getElementById('playPauseVideo').addEventListener('click', (e) => {
     }
 });
 
-// audio
+// Changing title of the video tag to name of the user whose video is being displayed in that tag.
+document.getElementById('video-grid').addEventListener('mouseover', function (event) {
+    if (event.target.tagName == "VIDEO") {
+        let id = event.target.getAttribute('id');
+        if (id === "Me") {
+            event.target.setAttribute("title", myName);
+        } else {
+            event.target.setAttribute("title", namesAndIds[id]);
+        }
+    }
 
+});
+
+
+// Toggling audio
 document.getElementById('muteButton').addEventListener('click', (e) => {
     e.preventDefault();
     let enabled = myVideostream.getAudioTracks()[0].enabled;
@@ -291,76 +271,53 @@ document.getElementById('muteButton').addEventListener('click', (e) => {
         myVideostream.getAudioTracks()[0].enabled = true;
         help.setMute();
     }
-
-
 });
 
-// chat
-document.getElementById('chat_btn').addEventListener('click',(e) => {
+// When chat button is pressed , showing the chat
+document.getElementById('chat_btn').addEventListener('click', (e) => {
     let el = document.getElementById('chat_btn');
     help.Showchat(el);
 });
 
-document.getElementById('save_chat').addEventListener('click',(e)=>{
-  help.saveChatToFile();
+// Calling helper function if user asks to save chat
+document.getElementById('save_chat').addEventListener('click', (e) => {
+    help.saveChatToFile();
 })
 
-// Participants
-document.getElementById('Participants').addEventListener('click',(e)=>{
-
+// If user ask for particpants
+document.getElementById('Participants').addEventListener('click', (e) => {
+    // Share invite includes the current window link
     document.getElementById("roomLink").value = window.location.href;
-
-var keys = Object.keys(namesAndIds);
-var myList = '<tr>';
-
-keys.forEach((key, index) => {
-    console.log(`${key}: ${namesAndIds[key]}`);
-    // myList += '<th scope="col">'+key+'</th>';
-    myList += '<th scope="col">'+namesAndIds[key]+'</th>';
-    myList += '</tr>';
+    // Participants are found using namesAndIds object
+    var keys = Object.keys(namesAndIds);
+    var myList = '<tr>';
+    // All participants then added to the list to render on website
+    keys.forEach((key, index) => {
+        myList += '<th scope="col">' + namesAndIds[key] + '</th>';
+        myList += '</tr>';
+    });
+    document.getElementById('users_body').innerHTML = myList;
+    help.toggleModal('participants_div', true);
 });
 
-document.getElementById('users_body').innerHTML = myList;
-help.toggleModal('participants_div',true);
-console.log(myList);
-});
-
-document.getElementById('video-grid').addEventListener('mouseover',function(event){
-if(event.target.tagName == "VIDEO")
-{   
-    let id = event.target.getAttribute('id');
-    if(id === "Me") {
-        event.target.setAttribute("title",myName);
-    }
-    else{
-        event.target.setAttribute("title",namesAndIds[id]);
-    }
-    
-    console.log(event.target.id);
-}
-
+// Close participants div
+document.getElementById('close_participants').addEventListener('click', (e) => {
+    help.toggleModal('participants_div', false);
 });
 
 
-document.getElementById('close_participants').addEventListener('click',(e)=>{
-    help.toggleModal('participants_div',false);
-});
-
-
-
-
-// Invite people
-document.getElementById('show_invite').addEventListener('click',(e)=>{
+// Invite people opens the same div as participants
+document.getElementById('show_invite').addEventListener('click', (e) => {
     document.getElementById('Participants').click();
 })
 
-document.getElementById('copyToClipboard').addEventListener('click',(e)=>{
+// Copytoclipboard
+document.getElementById('copyToClipboard').addEventListener('click', (e) => {
     var copytext = document.getElementById("roomLink");
-
     copytext.select();
     copytext.setSelectionRange(0, 99999);
     document.execCommand("copy");
-    
+
     document.getElementById('copyToClipboard').classList.add("fa-clipboard-check");
     document.getElementById('copyToClipboard').classList.remove("fa-clipboard");
 
@@ -368,109 +325,91 @@ document.getElementById('copyToClipboard').addEventListener('click',(e)=>{
         document.getElementById('copyToClipboard').classList.add("fa-clipboard");
         document.getElementById('copyToClipboard').classList.remove("fa-clipboard-check");
     }, 500);
-   
 });
 
 // Share Screen
-
-document.getElementById('share-screen').addEventListener('click',(e)=>{
+document.getElementById('share-screen').addEventListener('click', (e) => {
     e.preventDefault();
-    help.shareScreen().then((stream)=>{
-        help.toggleShareIcons( true );
+    help.shareScreen().then((stream) => {
+        help.toggleShareIcons(true);
         help.toggleScreenBtnDisabled(true);
         //save my screen stream
         screen = stream;
-         //share the new stream with all partners
-         let videoTrack = stream.getVideoTracks()[0];
-        
-        currentPeer.forEach((value)=>{
-            let sender = value.getSenders().find(function(s){
-                return s.track.kind == videoTrack.kind; 
+        //share the new stream with all partners
+        let videoTrack = stream.getVideoTracks()[0];
+
+        // Replace my video track to screen stream
+        currentPeer.forEach((value) => {
+            let sender = value.getSenders().find(function (s) {
+                return s.track.kind == videoTrack.kind;
             })
             sender.replaceTrack(videoTrack);
         })
-       
-        videoTrack.addEventListener( 'ended', () => {
+        videoTrack.addEventListener('ended', () => {
             stopSharingScreen();
-        } );
+        });
 
     });
-    });
+});
 
 // Record
-
-document.getElementById( 'record' ).addEventListener( 'click', ( e ) => {
+document.getElementById('record').addEventListener('click', (e) => {
     /**
      * Ask user what they want to record.
      * Get the stream based on selection and start recording
      */
-    if ( !mediaRecorder || mediaRecorder.state == 'inactive' ) {
-        help.toggleModal( 'recording-options-modal', true );
-    }
-
-    else if ( mediaRecorder.state == 'paused' ) {
+    if (!mediaRecorder || mediaRecorder.state == 'inactive') {
+        help.toggleModal('recording-options-modal', true);
+    } else if (mediaRecorder.state == 'paused') {
         mediaRecorder.resume();
-    }
-
-    else if ( mediaRecorder.state == 'recording' ) {
+    } else if (mediaRecorder.state == 'recording') {
         mediaRecorder.stop();
-        
         let tracks = record.getTracks();
-
         tracks.forEach(track => track.stop());
-
-
     }
-} );
+});
 
 //When user choose to record screen
-document.getElementById( 'record-screen' ).addEventListener( 'click', () => {
-    help.toggleModal( 'recording-options-modal', false );
-
-    if ( record && record.getVideoTracks().length ) {
-        startRecording( record );
-    }
-
-    else {
-        help.shareScreen().then( ( screenStream ) => {
+document.getElementById('record-screen').addEventListener('click', () => {
+    help.toggleModal('recording-options-modal', false);
+    if (record && record.getVideoTracks().length) {
+        startRecording(record);
+    } else {
+        help.shareScreen().then((screenStream) => {
             record = screenStream;
-            startRecording( screenStream );
-        } ).catch( () => { } );
+            startRecording(screenStream);
+        }).catch(() => {});
     }
-} );
+});
 
- //When user choose to record own video
-document.getElementById( 'record-video' ).addEventListener( 'click', () => {
-    help.toggleModal( 'recording-options-modal', false );
-
-    if ( myVideostream && myVideostream.getTracks().length ) {
-        startRecording( myVideostream );
+//When user choose to record own video
+document.getElementById('record-video').addEventListener('click', () => {
+    help.toggleModal('recording-options-modal', false);
+    if (myVideostream && myVideostream.getTracks().length) {
+        startRecording(myVideostream);
+    } else {
+        help.getUserFullMedia().then((videoStream) => {
+            startRecording(videoStream);
+        }).catch(() => {});
     }
+});
 
-    else {
-        help.getUserFullMedia().then( ( videoStream ) => {
-            startRecording( videoStream );
-        } ).catch( () => { } );
-    }
-} );
+// Close record modal
+document.getElementById('closeModal').addEventListener('click', () => {
+    help.toggleModal('recording-options-modal', false);
 
-document.getElementById( 'closeModal' ).addEventListener( 'click', () => {
-    help.toggleModal( 'recording-options-modal', false );
+});
 
-} );
-
-// Taking name of the user
-
-document.getElementById('submitName').addEventListener('click',()=>{
+// Taking name of the user joined
+document.getElementById('submitName').addEventListener('click', () => {
     let value = help.checkInput();
-    if(value){
-     myName = value;
-     $('#myModal').modal('hide');
-     namesAndIds[currentuserId] = value;
-     socket.emit('name',{
-         name: value,
-         id: currentuserId,
-     });
+    if (value) {
+        myName = value;
+        $('#myModal').modal('hide');
+        namesAndIds[currentuserId] = value;
+        socket.emit('name', {
+            name: value,
+            id: currentuserId,
+        });
     }
-    console.log(value);
 });

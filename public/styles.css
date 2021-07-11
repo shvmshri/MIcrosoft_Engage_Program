@@ -52,6 +52,7 @@ video {
     justify-content: center;
 }
 
+
 /* CONTROLS */
 .Controls_block {
     transform: translateY(10%) translateX(50%);
@@ -92,6 +93,7 @@ video {
     display: none;
 
 }
+
 
 /* CHAT WINDOW */
 .showchat .active {
@@ -238,15 +240,16 @@ video {
     border: none;
 }
 
-h4{
+h4 {
     margin: 1.5rem 2rem 1rem;
 }
-.invitePop{
+
+.invitePop {
     margin-bottom: 2rem;
 }
 
-.invitePop i{
-font-size: 1.5rem;
-margin-left: 0.5rem;
-cursor: pointer;
+.invitePop i {
+    font-size: 1.5rem;
+    margin-left: 0.5rem;
+    cursor: pointer;
 }

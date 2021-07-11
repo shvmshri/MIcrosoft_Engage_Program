@@ -8,6 +8,7 @@
 
     <title>Teams Clone</title>
 
+    <!-- Stylesheets -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css"
         integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
     <link rel="stylesheet" href="https://bootswatch.com/4/journal/bootstrap.min.css" />
@@ -18,7 +19,7 @@
         const room_id = '<%= roomId %>';
     </script>
 
-
+    <!-- Javascript, Jquery -->
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
         integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous">
     </script>
@@ -47,7 +48,7 @@
 
 <body>
 
-    <!-- Modal -->
+    <!-- Modal to take name of the user-->
     <div class="modal fade" id="myModal" data-backdrop="static" data-keyboard="false" tabindex="-1"
         aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-sm">
@@ -55,20 +56,24 @@
                 <div class="modal-header">
                     <h5 class="modal-title" id="staticBackdropLabel">Enter your details:</h5>
                 </div>
-                    <div class="modal-body">
-                            <input type="text" id="userName" placeholder="Name*" autocomplete="off">
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" id="submitName">
-                            Go!
-                        </button>
-                    </div>
+                <div class="modal-body">
+                    <input type="text" id="userName" placeholder="Name*" autocomplete="off">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" id="submitName">
+                        Go!
+                    </button>
+                </div>
             </div>
         </div>
     </div>
 
+    <!-- Chat audio  -->
     <audio src="chat_request.mp3" id="chatAudio"></audio>
+
+    <!-- Main grid -->
     <div class="main">
+
         <div class="left">
             <div class="mainVideos">
                 <div id="video-grid"></div>
@@ -80,24 +85,21 @@
                     </div>
                     <div class="Controls_button btn" id="playPauseVideo" type="button" title="Pause Video">
                         <i class="fa fa-video"></i>
-
                     </div>
                     <div class="Controls_button btn" id="chat_btn" type="button" title="Chat">
                         <i class="fa fa-comment"></i>
-
                     </div>
                     <div class="Controls_button btn" id="show_invite" type="button" title="Invite People">
                         <i class="fa fa-user-plus"></i>
-
                     </div>
                     <div class="Controls_button btn" id="record" type="button" title="Record">
                         <i class="fa fa-dot-circle text-white"></i>
                     </div>
                     <div class="Controls_button btn" id="share-screen" type="button" title="Share Screen">
-                        <i class="far fa-caret-square-up"></i>                       
+                        <i class="far fa-caret-square-up"></i>
                     </div>
                     <div class="Controls_button btn" id="Participants" type="button" title="Participants">
-                        <i class="fa fa-users"></i>                      
+                        <i class="fa fa-users"></i>
                     </div>
                     <a href="/close">
                         <div class="Controls_button leaveMeeting rounded-0 btn" id="leave-meeting" type="button"
@@ -105,12 +107,11 @@
                             <i class="fas fa-times"></i>
                         </div>
                     </a>
-
                 </div>
             </div>
         </div>
-        <div class="right">
 
+        <div class="right">
             <div class="header_chat">
                 <h5>CHAT BOX</h5>
             </div>
@@ -125,10 +126,10 @@
         </div>
     </div>
 
+    <!-- Custom Modal for record options-->
     <div class="custom-modal" id='recording-options-modal'>
         <div class="custom-modal-content">
             <div class="row text-center">
-
                 <ul>
                     <li class="record-option" id="record-video">Record Video</li>
                     <li class="record-option" id="record-screen">Record Screen</li>
@@ -138,7 +139,9 @@
         </div>
     </div>
 
+    <!-- Partcipants div -->
     <div class="participants" id="participants_div">
+        <!-- Share invite div -->
         <div id="share_invite">
             <h4>Share Invite</h4>
             <div class="invitePop">
@@ -149,16 +152,17 @@
         <div id="users_table">
             <table class="table">
                 <thead>
-                  <tr>
-                    <th scope="col">Participants</th>
-                  </tr>
+                    <tr>
+                        <th scope="col">Participants</th>
+                    </tr>
                 </thead>
                 <tbody id="users_body">
                 </tbody>
-              </table>
+            </table>
         </div>
         <button class="btn btn-lg rounded-0 btn-secondary" id='close_participants'>Close</button>
     </div>
+
 
 </body>
 
