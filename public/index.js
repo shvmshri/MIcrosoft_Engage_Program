@@ -15,7 +15,7 @@ myVideo.muted = true;
 // PEER CONNECTIONS
 const peer = new Peer(undefined, {
     host: 'videochat2001.herokuapp.com',
-    port: '9000',
+    port: '443',
     path: '/',
 })
 
