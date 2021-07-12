@@ -167,6 +167,11 @@ video {
     flex: 1;
 }
 
+.msg_container i{
+    color: #fff;
+    margin-right: 1.5rem;
+}
+
 
 /* RECORD */
 .record-option {
