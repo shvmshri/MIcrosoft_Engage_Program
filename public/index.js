@@ -11,8 +11,14 @@ const chat_window = document.getElementById("msg_window");
 var myVideo = document.createElement("video"); //made a video element to append in doc 
 myVideo.muted = true;
 
+// PEER CONNECTIONS (FOR LOCAL USAGE)
+// const peer = new Peer(undefined, {
+//     host: 'localhost',
+//     port: '3001',
+//     path: '/',
+// })
 
-// PEER CONNECTIONS
+// PEER CONNECTIONS (FOR HEROKU)
 const peer = new Peer(undefined, {
     host: 'videochat2001.herokuapp.com',
     port: '443',
