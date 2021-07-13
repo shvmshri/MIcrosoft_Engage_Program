@@ -40,3 +40,6 @@ Connections are made peer to peer using webrtc API
 - For deployment : Heroku
 - For version control : Git
 
+### How it works
+When a user enters the website link , he/she is redirected to a random room and now the user can share the invite link to anyone, anyone entering the same link will enter the same room. This way we can have mutiple room by just clicking on the website link we gets a new room assigned to us, then users have access to all the features I mentioned above. Every user in the room has the access to all the functionalities available.
+
