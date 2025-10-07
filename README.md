@@ -1,10 +1,12 @@
 # Microsoft_Engage_Program
 
-[Check it out here](https://arcane-wave-79048.herokuapp.com/)
+<!-- [Check it out here](https://arcane-wave-79048.herokuapp.com/)  -->
+- Implemented a video chat app supporting group calls, chat, screen recording, screen sharing across multiple rooms, using PeerJS and Socket.io for real-time communication
+- Designed a Mesh Network solution for secure, seamless calls with up to 5 participants per room
 
 ### Usage
 
-Webapp is hosted on heroku : [Clone](https://arcane-wave-79048.herokuapp.com/)
+<!--  Webapp is hosted on heroku : [Clone](https://arcane-wave-79048.herokuapp.com/)  -->
 
 For local setup : Download the zip file of the project and uncomment the local peerserver setup in server.js and in index.js. Also, comment out the heroku peer connection setup in index.js 
 Now, run the following commands:
